@@ -21,7 +21,7 @@
         "ext-gd": "*"
     },
     "autoload" : {
-        "psr-4" : { "Denhell\\SmartInformationSystems\\FileBundle\\" : "" }
+        "psr-4" : { "SmartInformationSystems\\FileBundle\\" : "" }
     },
     "extra" : {
         "branch-alias" : {
