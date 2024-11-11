@@ -1,5 +1,5 @@
 {
-    "name" : "smart-information-systems/file-bundle",
+    "name" : "denhell/smartinformationsystems-filebundle",
     "description" : "File bundle",
     "type" : "symfony-bundle",
     "authors" : [
@@ -15,14 +15,13 @@
         "MIT"
     ],
     "require" : {
-        "php": ">=7.0",
-        "roave/security-advisories": "dev-master",
-        "symfony/symfony": "~3.2",
-        "imagine/imagine": "^0.6.0",
+        "php": ">=8.0",
+        "symfony/framework-bundle": "^5.4 || ^6.0 || ^7.0"
+        "imagine/imagine": "^0.7.1",
         "ext-gd": "*"
     },
     "autoload" : {
-        "psr-4" : { "SmartInformationSystems\\FileBundle\\" : "" }
+        "psr-4" : { "Denhell\\SmartInformationSystems-FileBundle\\FileBundle\\" : "" }
     },
     "extra" : {
         "branch-alias" : {
