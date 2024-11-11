@@ -16,7 +16,7 @@
     ],
     "require" : {
         "php": ">=8.0",
-        "symfony/framework-bundle": "^5.4 || ^6.0 || ^7.0"
+        "symfony/framework-bundle": "^5.4 || ^6.0 || ^7.0",
         "imagine/imagine": "^0.7.1",
         "ext-gd": "*"
     },
