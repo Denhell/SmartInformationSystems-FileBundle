@@ -1,6 +1,7 @@
 <?php
 namespace SmartInformationSystems\FileBundle\Form\DataTransformer;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -15,7 +16,7 @@ class UploadedFileTransformer implements DataTransformerInterface
     /**
      * Подключение к БД
      *
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $om;
 
@@ -47,7 +48,7 @@ class UploadedFileTransformer implements DataTransformerInterface
      */
     private $propertyName;
 
-    public function __construct(ObjectManager $om, AbstractStorage $storage, $dataClass, $entityClass, $propertyName)
+    public function __construct(EntityManagerInterface $om, AbstractStorage $storage, $dataClass, $entityClass, $propertyName)
     {
         $this->om = $om;
         $this->storage = $storage;
@@ -59,7 +60,7 @@ class UploadedFileTransformer implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function transform($value)
+    public function transform($value): mixed
     {
         return $value;
     }
@@ -67,7 +68,7 @@ class UploadedFileTransformer implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): mixed
     {
         if ($value === null) {
             return null;

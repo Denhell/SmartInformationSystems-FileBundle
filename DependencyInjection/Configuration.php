@@ -9,10 +9,10 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('smart_information_systems_file');
+        $treeBuilder = new TreeBuilder('smart_information_systems_file');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode->children()
             ->arrayNode('storage')->children()

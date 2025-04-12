@@ -1,6 +1,7 @@
 <?php
 namespace SmartInformationSystems\FileBundle\Form\Type;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,6 +15,7 @@ use SmartInformationSystems\FileBundle\Storage\ConfigurationContainer;
 use SmartInformationSystems\FileBundle\Storage\StorageFactory;
 use SmartInformationSystems\FileBundle\Storage\AbstractStorage;
 use SmartInformationSystems\FileBundle\Entity\Image;
+use SmartInformationSystems\FileBundle\Entity\ImagePreview;
 use SmartInformationSystems\FileBundle\Repository\ImagePreviewRepository;
 
 class FileType extends AbstractType
@@ -21,7 +23,7 @@ class FileType extends AbstractType
     /**
      * Подключение к БД
      *
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $om;
 
@@ -32,7 +34,7 @@ class FileType extends AbstractType
      */
     private $storage;
 
-    public function __construct(ObjectManager $entityManager, ConfigurationContainer $configuration)
+    public function __construct(EntityManagerInterface $entityManager, ConfigurationContainer $configuration)
     {
         $this->om = $entityManager;
         $this->storage = StorageFactory::create($configuration);
@@ -70,7 +72,7 @@ class FileType extends AbstractType
 
             if ($file instanceof Image) {
                 /** @var ImagePreviewRepository $rep */
-                $rep = $this->om->getRepository('SmartInformationSystemsFileBundle:ImagePreview');
+                $rep = $this->om->getRepository(ImagePreview::class);
                 if ($preview = $rep->getByName($file, 'admin')) {
                     $previewUrl = $this->storage->getUrl($preview);
                 }

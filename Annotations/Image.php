@@ -1,7 +1,7 @@
 <?php
 namespace SmartInformationSystems\FileBundle\Annotations;
 
-use Doctrine\ORM\Mapping\Annotation;
+use Doctrine\Common\Annotations\Annotation;
 
 /**
  * Картинка.
@@ -9,26 +9,26 @@ use Doctrine\ORM\Mapping\Annotation;
  * @Annotation
  * @Target("PROPERTY")
  */
-final class Image implements Annotation
+final class Image
 {
     /**
      * Ширина.
      *
-     * @var integer
+     * @var int
      */
     public $width;
 
     /**
      * Высота.
      *
-     * @var integer
+     * @var int
      */
     public $height;
 
     /**
      * Обрезать при ресайзе.
      *
-     * @var boolean
+     * @var bool
      */
     public $crop = false;
 

@@ -1,21 +1,24 @@
 <?php
 namespace SmartInformationSystems\FileBundle\Twig;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+
 use SmartInformationSystems\FileBundle\Entity\File;
 use SmartInformationSystems\FileBundle\Storage\AbstractStorage;
 use SmartInformationSystems\FileBundle\Storage\ConfigurationContainer;
 use SmartInformationSystems\FileBundle\Storage\StorageFactory;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
 /**
  * Расширение для файлов
  */
-class FileExtension extends \Twig_Extension
+class FileExtension extends AbstractExtension
 {
     /**
      * Подключение к БД
      *
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -33,9 +36,15 @@ class FileExtension extends \Twig_Extension
      */
     private $storageConfiguration;
 
-    public function __construct(EntityManager $em, ConfigurationContainer $storageConfiguration)
+    /**
+     * Конструктор.
+     *
+     * @param EntityManagerInterface $entityManager Подключение к БД
+     * @param ConfigurationContainer $storageConfiguration Настройки
+     */
+    public function __construct(EntityManagerInterface $entityManager, ConfigurationContainer $storageConfiguration)
     {
-        $this->em = $em;
+        $this->em = $entityManager;
         $this->storageConfiguration = $storageConfiguration;
     }
 
@@ -45,7 +54,7 @@ class FileExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('sis_get_url', [$this, 'fileGetUrlFilter']),
+            new TwigFilter('sis_get_url', [$this, 'fileGetUrlFilter']),
         );
     }
 

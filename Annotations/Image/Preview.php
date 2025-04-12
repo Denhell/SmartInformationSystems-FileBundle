@@ -1,7 +1,7 @@
 <?php
 namespace SmartInformationSystems\FileBundle\Annotations\Image;
 
-use Doctrine\ORM\Mapping\Annotation;
+use Doctrine\Common\Annotations\Annotation;
 
 /**
  * Превью картинки.
@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping\Annotation;
  * @Annotation
  * @Target("ANNOTATION")
  */
-final class Preview implements Annotation
+final class Preview
 {
     /**
      * Имя превью.

@@ -2,33 +2,33 @@
 namespace SmartInformationSystems\FileBundle\Common;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use SmartInformationSystems\FileBundle\Entity\File as SisFile;
 
 /**
  * Абстрактный класс для файлов
  */
+#[ORM\Entity]
+#[ORM\MappedSuperclass]
+#[ORM\HasLifecycleCallbacks]
 abstract class AbstractEntity
 {
     /**
      * Идентификатор
      *
      * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", options={"unsigned"=true})
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER, options: ['unsigned' => true])]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
     /**
      * Дата создания
      *
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTimeInterface
      */
-    protected $createdAt;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: false)]
+    protected \DateTimeInterface $createdAt;
 
     /**
      * Оригинальный файл
@@ -66,9 +66,8 @@ abstract class AbstractEntity
 
     /**
      * Выполняется перед сохранением в БД.
-     *
-     * @ORM\PrePersist
      */
+    #[ORM\PrePersist]
     public function prePersist()
     {
         $this->createdAt = new \DateTime();

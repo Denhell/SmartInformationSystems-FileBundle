@@ -51,6 +51,26 @@ class ImageRepository extends AbstractRepository
      */
     public static function resizeFile(OriginalFile $file, $width, $height, $crop)
     {
+        $path = $file->getRealPath();
+
+        if (!file_exists($path)) {
+            throw new \RuntimeException("File not found: $path");
+        }
+
+        if (filesize($path) === 0) {
+            throw new \RuntimeException("Empty file: $path");
+        }
+
+        $info = getimagesize($path);
+        if ($info === false) {
+            throw new \RuntimeException("File is not image: $path");
+        }
+
+        $data = @file_get_contents($path);
+        $resource = imagecreatefromstring($data);
+var_dump($resource);
+var_dump(is_resource($resource));
+
         $imagine = new Imagine();
         $imagine
             ->open($file->getRealPath())
