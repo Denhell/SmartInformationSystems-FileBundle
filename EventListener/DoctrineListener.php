@@ -1,8 +1,7 @@
 <?php
 namespace SmartInformationSystems\FileBundle\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
-
+use Doctrine\ORM\Event\PrePersistEventArgs;
 use SmartInformationSystems\FileBundle\Entity\File;
 use SmartInformationSystems\FileBundle\Storage\AbstractStorage;
 use SmartInformationSystems\FileBundle\Storage\ConfigurationContainer;
@@ -30,13 +29,13 @@ class DoctrineListener
     /**
      * Обработчик события "prePersist".
      *
-     * @param LifecycleEventArgs $args
+     * @param PrePersistEventArgs $args
      *
      * @return void
      */
-    public function prePersist(LifecycleEventArgs $args)
+    public function prePersist(PrePersistEventArgs $args)
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
 
         if ($entity instanceof File) {
             $entity->setExternalToken(

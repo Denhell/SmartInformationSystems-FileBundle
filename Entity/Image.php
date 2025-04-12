@@ -8,49 +8,44 @@ use SmartInformationSystems\FileBundle\Common\AbstractEntity;
 
 /**
  * Изображение
- *
- * @ORM\Entity(repositoryClass="SmartInformationSystems\FileBundle\Repository\ImageRepository")
- * @ORM\Table(name="sis_image")
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Table(name: 'sis_image')]
+#[ORM\Entity(repositoryClass: \SmartInformationSystems\FileBundle\Repository\ImageRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Image extends AbstractEntity
 {
     /**
      * Файл
      *
      * @var File
-     *
-     * @ORM\OneToOne(targetEntity="File", cascade="all")
-     * @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=false)
      */
-    protected $file;
+    #[ORM\JoinColumn(name: 'file_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity: \File::class, cascade: ['persist', 'remove'])]
+    protected ?\SmartInformationSystems\FileBundle\Entity\File $file = null;
 
     /**
      * Ширина картинки
      *
      * @var integer
-     *
-     * @ORM\Column(type="integer", nullable=false)
      */
-    protected $width;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER, nullable: false)]
+    protected int $width;
 
     /**
      * Высота картинки
      *
      * @var integer
-     *
-     * @ORM\Column(type="integer", nullable=false)
      */
-    protected $height;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER, nullable: false)]
+    protected int $height;
 
     /**
      * Превью
      *
      * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="ImagePreview", mappedBy="image", cascade="all", orphanRemoval=true)
      */
-    protected $previews;
+    #[ORM\OneToMany(targetEntity: \ImagePreview::class, mappedBy: 'image', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    protected \Doctrine\Common\Collections\Collection $previews;
 
     /**
      * {@inheritdoc}
@@ -170,9 +165,8 @@ class Image extends AbstractEntity
 
     /**
      * Выполняется перед сохранением в БД
-     *
-     * @ORM\PrePersist
      */
+    #[ORM\PrePersist]
     public function prePersist()
     {
         parent::prePersist();

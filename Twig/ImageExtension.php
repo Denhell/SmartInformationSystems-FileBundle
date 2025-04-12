@@ -1,23 +1,25 @@
 <?php
 namespace SmartInformationSystems\FileBundle\Twig;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use SmartInformationSystems\FileBundle\Entity\Image;
 use SmartInformationSystems\FileBundle\Entity\ImagePreview;
 use SmartInformationSystems\FileBundle\Repository\ImagePreviewRepository;
 use SmartInformationSystems\FileBundle\Storage\AbstractStorage;
 use SmartInformationSystems\FileBundle\Storage\ConfigurationContainer;
 use SmartInformationSystems\FileBundle\Storage\StorageFactory;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
 /**
  * Расширение для изображений.
  */
-class ImageExtension extends \Twig_Extension
+class ImageExtension extends AbstractExtension
 {
     /**
      * Подключение к БД
      *
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -35,9 +37,15 @@ class ImageExtension extends \Twig_Extension
      */
     private $storageConfiguration;
 
-    public function __construct(EntityManager $em, ConfigurationContainer $storageConfiguration)
+    /**
+     * Конструктор.
+     *
+     * @param EntityManagerInterface $entityManager Подключение к БД
+     * @param ConfigurationContainer $storageConfiguration Настройки
+     */
+    public function __construct(EntityManagerInterface $entityManager, ConfigurationContainer $storageConfiguration)
     {
-        $this->em = $em;
+        $this->em = $entityManager;
         $this->storageConfiguration = $storageConfiguration;
     }
 
@@ -47,7 +55,7 @@ class ImageExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('sis_image_preview', [$this, 'previewFilter']),
+            new TwigFilter('sis_image_preview', [$this, 'previewFilter']),
         ];
     }
 

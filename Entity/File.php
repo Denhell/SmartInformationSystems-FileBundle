@@ -7,57 +7,51 @@ use SmartInformationSystems\FileBundle\Common\AbstractEntity;
 
 /**
  * Файл
- *
- * @ORM\Entity(repositoryClass="SmartInformationSystems\FileBundle\Repository\FileRepository")
- * @ORM\Table(name="sis_file")
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Table(name: 'sis_file')]
+#[ORM\Entity(repositoryClass: \SmartInformationSystems\FileBundle\Repository\FileRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class File extends AbstractEntity
 {
     /**
      * Имя файла
      *
      * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=false)
      */
-    protected $name;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: false)]
+    protected string $name;
 
     /**
      * Уникальный ключ
      *
      * @var string
-     *
-     * @ORM\Column(type="string", length=32, nullable=false, unique=true)
      */
-    protected $token;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 32, nullable: false, unique: true)]
+    protected string $token;
 
     /**
      * Внешний уникальный ключ, зависит от системы хранения
      *
      * @var string
-     *
-     * @ORM\Column(name="external_token", type="string", length=255, nullable=false, unique=true)
      */
-    protected $externalToken;
+    #[ORM\Column(name: 'external_token', type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: false, unique: true)]
+    protected string $externalToken;
 
     /**
      * Тип файла
      *
      * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=false)
      */
-    protected $mime;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: false)]
+    protected string $mime;
 
     /**
      * Размер файла
      *
      * @var integer
-     *
-     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
-    protected $size;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER, options: ['unsigned' => true], nullable: false)]
+    protected int $size;
 
     /**
      * {@inheritdoc}
@@ -139,9 +133,8 @@ class File extends AbstractEntity
 
     /**
      * Выполняется перед сохранением в БД
-     *
-     * @ORM\PrePersist
      */
+    #[ORM\PrePersist]
     public function prePersist()
     {
         parent::prePersist();

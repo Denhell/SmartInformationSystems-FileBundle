@@ -7,64 +7,54 @@ use SmartInformationSystems\FileBundle\Common\AbstractEntity;
 
 /**
  * Превью изображения.
- *
- * @ORM\Entity(repositoryClass="SmartInformationSystems\FileBundle\Repository\ImagePreviewRepository")
- * @ORM\Table(
- *     name="sis_image_preview",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="ui_name", columns={"image_id", "name"})
- *     }
- * )
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Table(name: 'sis_image_preview')]
+#[ORM\UniqueConstraint(name: 'ui_name', columns: ['image_id', 'name'])]
+#[ORM\Entity(repositoryClass: \SmartInformationSystems\FileBundle\Repository\ImagePreviewRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ImagePreview extends AbstractEntity
 {
     /**
      * Имя превью
      *
      * @var string
-     *
-     * @ORM\Column(nullable=false)
      */
+    #[ORM\Column(nullable: false)]
     protected $name;
 
     /**
      * Изображение
      *
      * @var Image
-     *
-     * @ORM\ManyToOne(targetEntity="Image", inversedBy="previews", cascade="all")
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", nullable=false)
      */
-    protected $image;
+    #[ORM\JoinColumn(name: 'image_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \Image::class, inversedBy: 'previews', cascade: ['persist', 'remove'])]
+    protected ?\SmartInformationSystems\FileBundle\Entity\Image $image = null;
 
     /**
      * Файл
      *
      * @var File
-     *
-     * @ORM\OneToOne(targetEntity="File", cascade="all")
-     * @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=false)
      */
-    protected $file;
+    #[ORM\JoinColumn(name: 'file_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity: \File::class, cascade: ['persist', 'remove'])]
+    protected ?\SmartInformationSystems\FileBundle\Entity\File $file = null;
 
     /**
      * Ширина картинки
      *
      * @var integer
-     *
-     * @ORM\Column(type="integer", nullable=false)
      */
-    protected $width;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER, nullable: false)]
+    protected int $width;
 
     /**
      * Высота картинки
      *
      * @var integer
-     *
-     * @ORM\Column(type="integer", nullable=false)
      */
-    protected $height;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER, nullable: false)]
+    protected int $height;
 
     /**
      * {@inheritdoc}
@@ -174,9 +164,8 @@ class ImagePreview extends AbstractEntity
 
     /**
      * Выполняется перед сохранением в БД
-     *
-     * @ORM\PrePersist
      */
+    #[ORM\PrePersist]
     public function prePersist()
     {
         parent::prePersist();
